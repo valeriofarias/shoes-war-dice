@@ -1,0 +1,19 @@
+Welcome to War Dices Simulation!
+
+This app is a simulation of the dices of war game. exactly! Red dices for attack and Yellow dices for defense.
+
+It uses two classes: Dice and Wardice. This classes is covered by rspec tests.
+
+Now, just use and have fun!
+
+
+The principal program is diceshoes.rb
+run it. 
+
+The dice.rb file has two classes: 
+
+ Dice -> simulate a dice of 6 sides
+ WarDice -> simulate the dices of war game
+ 
+Both classes are 100% tested. 
+The rspec file is in dice/spec folder.

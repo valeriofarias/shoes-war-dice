@@ -1,75 +1,82 @@
 require 'dice'
 
-Shoes.app :title => "Dices of War game", :width => 500, :height => 500 do
+Shoes.app :title => "Dice of War game", :width => 500, :height => 500 do
 	background gradient(black, teal)
 
+   # List with number of red dice: 1, 2 or 3
    para "Red", :stroke => tomato
-   @numberreddices = list_box :items => ["1", "2", "3"],
+   @numberreddice = list_box :items => ["1", "2", "3"],
       :width => 70, :choose => "3" do |list|
    end
    
    para " X ", :stroke => snow
-   @numberyellowdices = list_box :items => ["1", "2", "3"],
+
+   # List with number of yellow dice: 1, 2 or 3   
+   @numberyellowdice = list_box :items => ["1", "2", "3"],
       :width => 70, :choose => "3" do |list|
    end
-   
    para "Yellow", :stroke => yellow
- 
-   # Define a aleatory position
+ 	
+   # Define an aleatory position
   	@a = @b = @c = []
 
-  	(40..200).step(10){  | x | @a << x }
-  	(230..450).step(10){ | y | @b << y }
-	(80..450).step(10){  | z | @c << z }
+  	 (40..200).step(10){ |x| @a << x }
+  	(230..450).step(10){ |y| @b << y }
+	 (80..450).step(10){ |z| @c << z }
   
-  	# inicialize war dices object
-	@reddices = []
-	@yellowdices = []
-  	@names2 = []
+  	# Variables that will store values of wardice object 
+	@reddice = @yellowdice = @resulttext = []
   	
   	button "Attack", :width => 80 do
-  	
-  		@dice.each{  | d | d.remove }
-		@names2.each{| a | a.remove }	
+
+  		# Clear the screen
+  		@dice.each{  |d| d.remove }
+		@resulttext.each{ |a| a.remove }	
 		
-		wardices = WarDices.new( @numberreddices.text.to_i, @numberyellowdices.text.to_i ) 
-  		@reddices = wardices.reddices
-  		@yellowdices = wardices.yellowdices
- 		@result = wardices.result
+		# The wardice object is initializing
+		wardice     = WarDice.new( @numberreddice.text.to_i, @numberyellowdice.text.to_i ) 
+  		@reddice    = wardice.reddice
+  		@yellowdice = wardice.yellowdice
+ 		@result     = wardice.result
   		
-  	   @reddices.each{ |item| draw(@a[rand(@a.length)], @c[rand(@c.length)], item.to_s.to_i, 1, true) }
- 	   @yellowdices.each{ |item| draw(@b[rand(@b.length)], @c[rand(@c.length)], item.to_s.to_i, 2, true)}
+  		# Every dice is drawn in random position 
+  	   @reddice.each{ |item| draw(@a[rand(@a.length)], @c[rand(@c.length)], item.to_s.to_i, 1, true) }
+ 	   @yellowdice.each{ |item| draw(@b[rand(@b.length)], @c[rand(@c.length)], item.to_s.to_i, 2, true)}
 
  	end 
  	
  	button "Verify", :width => 80 do
+  		
+  		# Clear the screen
+  		@dice.each{  |d| d.remove }
+  		@resulttext.each{ |a| a.remove }	
+		
+		# Initial position of dice
+   	leftyellow = 250
+		leftred    = 150
+		topred     = topyellow = 100  
   	
-  		@dice.each{  | d | d.remove }
-  		@names2.each{| a | a.remove }	
-
-   	yellowx = 250
-		redx = 150
-		redy = yellowy = 100  
-  	
-  	   @reddices.each do  | item | 
-  	   	draw( redx, redy, item.to_s.to_i, 1, false )  
-  	   	redy += 100
+  		# Every dice are drawn in a defined position
+  	   @reddice.each do  |item| 
+  	   	draw( leftred, topred, item.to_s.to_i, 1, false )  
+  	   	topred += 100
   	   end		
   	   	
- 	   @yellowdices.each do | item | 
- 	   	draw( yellowx, yellowy, item.to_s.to_i, 2, false )
- 	   	yellowy += 100
+ 	   @yellowdice.each do |item| 
+ 	   	draw( leftyellow, topyellow, item.to_s.to_i, 2, false )
+ 	   	topyellow += 100
  	   end
  	   
- 	   resultx = 300
- 	   resulty = 80
- 	   @result.each do | item |
- 	   	@names = para item.to_s, :stroke => snow, :top => resulty, :left => resultx
- 	   	resulty += 100
- 	   	@names2 << @names
+ 	   # Initial position of result
+ 	   leftresult = 300
+ 	   topresult  = 80
+		
+		# The results are drawn in defined positions
+ 	   @result.each_with_index do |item, index|
+ 	   	@resulttext[index] = para item.to_s, :stroke => snow, :top => topresult, :left => leftresult
+ 	   	topresult += 100
  	   end
  	    
-
  	end
  	
  

@@ -44,38 +44,33 @@ describe Array do
 	end
 end
 
-describe WarDices do
-	it "The attack and defense should use 1, 2 or 3 dices" do 
-		wardices = WarDices.new(0, 7)
-		wardices.red.to_s.should match(/^[1-3]$/)
-		wardices.yellow.to_s.should match(/^[1-3]$/)
+describe WarDice do
+	it "The attack and defense should use 1, 2 or 3 dice" do 
+		wardice = WarDice.new(0, 7)
+		wardice.red.to_s.should match(/^[1-3]$/)
+		wardice.yellow.to_s.should match(/^[1-3]$/)
 
-		wardices2 = WarDices.new(2, 3)
-		wardices2.red.should == 2
-		wardices2.yellow.should == 3
+		wardice2 = WarDice.new(2, 3)
+		wardice2.red.should == 2
+		wardice2.yellow.should == 3
 	end
 	
-	it "Should provide yellow and red dices results with an array in decreasing sort" do
-		wardices = WarDices.new(3, 3)
-		wardices.reddices.is_a?(Array).should be_true
-		wardices.yellowdices.is_a?(Array).should be_true
+	it "Should provide yellow and red dice results with an array in decreasing sort" do
+		wardice = WarDice.new(3, 3)
+		wardice.reddice.is_a?(Array).should be_true
+		wardice.yellowdice.is_a?(Array).should be_true
 		
-		wardices.reddices.sort{|x, y| y <=> x }.should == wardices.reddices
-		wardices.yellowdices.sort{|x, y| y <=> x }.should == wardices.yellowdices
+		wardice.reddice.sort{|x, y| y <=> x }.should == wardice.reddice
+		wardice.yellowdice.sort{|x, y| y <=> x }.should == wardice.yellowdice
 	
 	end
 	
 	it "Should compare from bigger to less values and save in array result" do
-		wardices = WarDices.new(3, 2)
-		wardices.reddices.first.should > wardices.reddices.last
-		wardices.attack
+		wardice = WarDice.new(3, 2)
+		wardice.reddice.first.should > wardice.reddice.last
+		wardice.attack
 
-		wardices.result[0].should == "Red Win" if wardices.reddices[0] > wardices.yellowdices[0]
-		wardices.result[0].should == "Yellow Win" if wardices.reddices[0] <= wardices.yellowdices[0]
+		wardice.result[0].should == "Red Win" if wardice.reddice[0] > wardice.yellowdice[0]
+		wardice.result[0].should == "Yellow Win" if wardice.reddice[0] <= wardice.yellowdice[0]
 	end
 end
-
-
-
-
-
